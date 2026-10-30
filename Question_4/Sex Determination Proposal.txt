@@ -1,0 +1,9 @@
+I propose a plate-based reverse-transcription quantitative PCR (RT-qPCR) assay using REM16 (LOC115699937) as the primary marker. In the supplied dataset, REM16 expression was consistently higher in XX than XY samples, with medians of 10.50 and 8.68. FT1 showed substantial overlap and would initially be evaluated only as a supplementary predictor.
+
+Collect a small, barcoded tissue sample from each plant at a standardized developmental stage, using a tissue type validated for the assay. Stabilize RNA immediately. Extract RNA in 96-well plates using automated magnetic-bead purification and DNase treatment, assess RNA quality and quantity, and reverse-transcribe equal RNA inputs into cDNA.
+
+Measure REM16 alongside two reference genes verified to be stable across sexes and sampling conditions. Validate primer specificity and amplification efficiency. Include known-sex controls, extraction blanks, no-template controls, no-reverse-transcription controls, and technical replicates. Calculate reference-normalized REM16 expression.
+
+Establish classification thresholds using plants with independently confirmed sex, then evaluate performance on an independent validation set covering relevant cultivars and developmental stages. Do not transfer the transcriptomic values directly into qPCR thresholds. Assign female or male predictions only within validated ranges; report borderline or failed samples as inconclusive. Retain FT1 only if it improves independent predictive performance.
+
+Scale through robotic liquid handling, 384-well qPCR, barcode-based tracking, and automated quality checks and reporting. Report sensitivity, specificity, and inconclusive rates. This remains a proposed expression-based predictor, not an established diagnostic test.
