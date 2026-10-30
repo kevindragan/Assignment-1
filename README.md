@@ -32,16 +32,6 @@ git clone https://github.com/kevindragan/Assignment-1.git
 cd Assignment-1
 ```
 
-At the revision tested on October 30, 2026, the repository contained the dataset but **did not contain `plot_REM16_FT1.R`**. Until the script is committed to the repository, download [plot_REM16_FT1.R](https://chatgpt.com/library?file_id=libfile_d622e14f2d9481919eefe05d010f3ec2&account_id=personal) from the accompanying deliverables and save it in the `Assignment-1` root directory. The ChatGPT download link requires access to the file. Alternatively, extract the script from the accompanying workflow ZIP. Save this README in the same directory.
-
-The setup should contain:
-
-- `Assignment-1/README.md`
-- `Assignment-1/plot_REM16_FT1.R`
-- `Assignment-1/2_Data_RNASeq_Cannabis_Sex.csv` (included by the clone, but not read by this script)
-
-To inspect the code, open `plot_REM16_FT1.R` in RStudio or another text editor.
-
 ## 4. Run the analysis
 
 ### Option A: terminal
