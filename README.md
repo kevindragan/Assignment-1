@@ -46,7 +46,7 @@ To inspect the code, open `plot_REM16_FT1.R` in RStudio or another text editor.
 
 ### Option A: terminal
 
-From the `Assignment-1` root directory, run:
+From the `code` root directory, run:
 
 ```bash
 Rscript --vanilla plot_REM16_FT1.R
