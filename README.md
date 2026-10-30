@@ -25,42 +25,56 @@ An internet connection is required each time the script runs because it reads th
 
 ## 3. Clone and open the analysis
 
-In a terminal:
+Open a terminal (Git Bash on Windows) in the folder where you want to store the project:
 
 ```bash
 git clone https://github.com/kevindragan/Assignment-1.git
 cd Assignment-1
 ```
 
+The analysis script is already included at `Code/plot_REM16_FT1.R`. Folder names are case-sensitive on Linux: use `Code`, not `code`.
+
+| Repository path | Purpose |
+| --- | --- |
+| `Code/plot_REM16_FT1.R` | Executable analysis script |
+| `2_Data_RNASeq_Cannabis_Sex.csv` | Dataset; the script reads its online GitHub copy |
+| `Figures/` | Previously saved PDF figures |
+| `Question_1/`, `Question_2/`, `Question_4/` | Other assignment materials |
+
+Open `Code/plot_REM16_FT1.R` in RStudio using **File → Open File** to inspect the analysis.
+
 ## 4. Run the analysis
 
 ### Option A: terminal
 
-From the `code`  directory, run:
+From the repository root (`Assignment-1`), run:
 
 ```bash
-Rscript --vanilla plot_REM16_FT1.R
+Rscript --vanilla Code/plot_REM16_FT1.R results
 ```
 
-`--vanilla` prevents saved workspaces and personal R startup files from affecting the run. The script creates `figures/` under the current working directory. To use another output folder:
+The script creates `results/` in the repository root and writes all 10 outputs there. No local dataset path is needed. `--vanilla` prevents saved workspaces and personal R startup files from affecting the run.
 
-```bash
-Rscript --vanilla plot_REM16_FT1.R results
-```
-
-The sole optional argument is the output directory, not a dataset filename.
+The optional argument `results` is the output directory. Use a different name to keep separate runs. If omitted, the script uses `figures/` in the current working directory. Explicitly using `results` avoids confusing or overwriting the repository's existing `Figures/` directory on systems where filenames are case-insensitive, including typical Windows installations.
 
 ### Option B: RStudio
 
-1. Open `plot_REM16_FT1.R` using **File → Open File**.
-2. Choose **Session → Set Working Directory → To Source File Location** so output files go into the repository folder.
-3. In the Console, run:
+1. Choose **File → New Project → Existing Directory** and select the cloned `Assignment-1` folder. This creates a local RStudio project and opens it at the repository root.
+2. Open `Code/plot_REM16_FT1.R` from the Files pane or **File → Open File**.
+3. Open RStudio's **Terminal** tab (not the R Console). Make sure it is in the `Assignment-1` root folder, then run:
 
-```r
-source("plot_REM16_FT1.R")
+```bash
+Rscript --vanilla Code/plot_REM16_FT1.R results
 ```
 
-The script saves figures directly to disk; they need not appear in RStudio's Plots pane. Open the `figures` folder using the Files pane or your file manager.
+If `Rscript` is not on your PATH, run this equivalent command in the **R Console**, with the working directory set to the repository root:
+
+```r
+system2(file.path(R.home("bin"), "Rscript"),
+        c("--vanilla", "Code/plot_REM16_FT1.R", "results"))
+```
+
+The plots are saved directly to disk, so they need not appear in RStudio's Plots pane. Open `results/` in the Files pane or your file manager to view the PNGs, PDFs, and tables.
 
 ## 5. Input and data-quality handling
 
@@ -97,10 +111,14 @@ For the tested dataset, there are 69 XX and 69 XY samples. REM16 uses all 138 ob
 ## 7. Troubleshooting
 
 - **GitHub download fails:** check your internet connection and open the raw CSV URL in a browser. Confirm that the repository/file still exists. If the timeout is insufficient, increase `300` in the script's `options(timeout = ...)` line.
-- **Cannot find the script:** verify that it was downloaded into the repository root, that its extension is `.R` rather than `.R.txt`, and that the terminal is in that directory.
+- **Cannot find the script:** verify that the terminal is in the `Assignment-1` root and that `Code/plot_REM16_FT1.R` exists. Preserve the capital C in `Code`.
 - **Cannot create outputs:** use a folder where you have write permission. Avoid overwriting files that are open in another program.
 - **Data validation error:** inspect the error and upstream CSV; do not bypass checks or replace missing values with zeros.
 
 ## 8. Fresh-clone verification
 
-See `workflow_test_report.txt` in the accompanying workflow ZIP for the tested revision, environment, commands, and comparison results. The verification explicitly includes adding the supplied script to the fresh clone because the remote repository did not yet contain it. No files were pushed to GitHub.
+Tested on October 30, 2026 from a new clone of repository commit `2b0c254153715a391f00552c0c2fb2b529baa6cb`, using Linux, R 4.3.3, Git 2.51.1, an empty user package library, and `--vanilla`.
+
+The repository's script was run unchanged, with no manually added script and no extra R packages. The documented root-directory command generated all 10 expected files in `results/`. All three PNGs and both CSV tables matched the previously verified results byte-for-byte. The R Console `system2()` command was also tested in a clean R session. RStudio's graphical interface and Windows/macOS installation steps were not tested.
+
+The test reads the live GitHub CSV, as the script specifies; a fixed repository checkout alone does not pin that remote input. No changes were pushed to GitHub.
