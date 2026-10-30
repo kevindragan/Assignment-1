@@ -20,6 +20,7 @@ if (anyDuplicated(sample) || any(!grepl("^[0-9]+_(XX|XY)$", sample)))
   stop("Duplicate sample names or unexpected sex suffix; check metadata.")
 # Interpret XX as female and XY as male, based on sample suffixes.
 # These are inferred sex groups, not independently verified phenotypes.
+# Assigns sex groups
 sex <- factor(ifelse(grepl("_XX$", sample), "Female (XX)", "Male (XY)"),
               levels = c("Female (XX)", "Male (XY)"))
 raw_id <- trimws(d[[1]])
@@ -27,11 +28,13 @@ raw_id <- trimws(d[[1]])
 # Remove only the explicit prefix, then match the complete locus ID.
 id <- sub("^Cannabis_", "", raw_id)
 targets <- c(REM16 = "LOC115699937", FT1 = "LOC115696989")
+#create character vector
 audit <- c(paste("Input URL:", input),
            paste("Dataset:", nrow(d), "rows;", length(sample), "samples"),
            "Sex inferred from sample suffixes: XX = female; XY = male.",
            "Expression units/normalization are not documented in the CSV.",
            "Original values retained: no log transform, normalization, or imputation.")
+# extract genes and validation
 rows <- lapply(names(targets), function(g) {
   i <- which(!is.na(id) & id == targets[g])
   if (length(i) != 1) stop(paste(g, "must match exactly one locus row; found", length(i)))
@@ -45,7 +48,9 @@ rows <- lapply(names(targets), function(g) {
              sample_id = sample, sex = sex, expression = v)
 })
 dat <- do.call(rbind, rows)
+# saves extracted data
 write.csv(dat, file.path(out, "REM16_FT1_extracted_expression.csv"), row.names = FALSE, na = "NA")
+#summary table
 summ <- do.call(rbind, lapply(split(dat, list(dat$gene, dat$sex)), function(z) {
   v <- z$expression[!is.na(z$expression)]
   if (!length(v)) stop("A gene/sex group has no observations.")
